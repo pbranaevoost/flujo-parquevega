@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo Marketing Automation - Parque Vega</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #059669 0%, #047857 100%); min-height: 100vh; color: #1f2937; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 15px; }
+        
+        .header { text-align: center; color: white; margin-bottom: 20px; }
+        .header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+        .header p { font-size: 1rem; opacity: 0.9; }
+        .flow-container { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .stage-title { font-size: 1.3rem; font-weight: 800; color: #1f2937; text-align: center; margin: 20px 0; padding: 8px 16px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 8px; border-left: 3px solid #10b981; }
+        .flow-section { margin-bottom: 30px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px; }
+        .node { display: inline-block; background: white; border-radius: 8px; padding: 10px 14px; border: 2px solid; margin: 4px; text-align: center; position: relative; font-size: 0.75rem; max-width: 280px; cursor: pointer; transition: all 0.3s ease; }
+        .node:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .node-trigger { border-color: #10b981; background: #f0fdf4; }
+        .node-decision { border-color: #f59e0b; background: #fffbeb; }
+        .node-email-auto { border-color: #3b82f6; background: #eff6ff; }
+        .node-email-rescue { border-color: #ef4444; background: #fef2f2; }
+        .node-whatsapp { border-color: #25d366; background: #f0fdf4; }
+        .node-alert { border-color: #8b5cf6; background: #f5f3ff; }
+        .node-transfer { border-color: #1f2937; background: #f9fafb; }
+        .node-title { font-weight: 700; margin-bottom: 4px; font-size: 0.7rem; }
+        .node-desc { font-size: 0.6rem; color: #64748b; }
+        .timing-badge { position: absolute; top: -6px; right: -6px; background: #f59e0b; color: white; border-radius: 8px; padding: 2px 4px; font-size: 0.55rem; font-weight: 700; }
+        .rescue-badge { background: #ef4444; }
+        .content-box { background: #f8fafc; padding: 8px; border-radius: 4px; margin-top: 6px; font-size: 0.65rem; line-height: 1.3; }
+        .templates { background: #f8fafc; padding: 8px; border-radius: 4px; margin-top: 6px; font-size: 0.65rem; line-height: 1.3; }
+        .templates a { color: #059669; text-decoration: none; margin-right: 8px; }
+        .flow-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; align-items: center; justify-content: center; }
+        .branch-container { display: flex; gap: 15px; margin: 15px 0; }
+        .branch { flex: 1; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px; }
+        .branch-title { font-weight: 700; text-align: center; padding: 4px 8px; border-radius: 4px; margin-bottom: 8px; font-size: 0.7rem; }
+        .branch-advance { background: #dcfce7; color: #166534; }
+        .branch-stagnant { background: #fee2e2; color: #991b1b; }
+        .arrow { text-align: center; margin: 8px 0; font-size: 1rem; }
+        .project-badge { display: inline-block; background: #059669; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; margin: 2px; }
+        .highlight-box { background: #f0fdf4; border-left: 3px solid #10b981; padding: 8px; margin: 8px 0; border-radius: 4px; font-size: 0.65rem; font-style: italic; color: #059669; }
+        .warning-box { background: #fef3c7; padding: 12px; border-radius: 8px; color: #92400e; font-weight: 600; font-size: 0.8rem; border: 2px solid #f59e0b; margin-top: 15px; text-align: center; }
+        
+        /* LMP styles */
+        .lmp-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 0.7rem; }
+        .lmp-familia-crecimiento { background: #dbeafe; color: #1e40af; border: 1px solid #3b82f6; }
+        .lmp-pareja-consolidada { background: #fce7f3; color: #831843; border: 1px solid #ec4899; }
+        
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .flow-row { flex-direction: column; }
+            .branch-container { flex-direction: column; }
+            .header h1 { font-size: 1.5rem; }
+            .node { max-width: 100%; margin: 2px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+            <div class="header">
+                <h1>Flujo Marketing Automation - Parque Vega</h1>
+                <p>Flujo Completo de Comunicación - Promoción Gijón</p>
+                <div style="margin-top: 10px;">
+                    <span class="project-badge">PARQUE VEGA</span>
+                    <span class="project-badge">LA CAMOCHA-VEGA</span>
+                    <span class="project-badge">52 ADOSADOS</span>
+                    <span class="project-badge">DEADLINE: 29 OCT</span>
+                </div>
+            </div>
+            
+            <div class="flow-container">
+                
+                <!-- PUNTOS DE ENTRADA -->
+                <div class="flow-section">
+                    <div class="stage-title">🚀 PUNTOS DE ENTRADA - CAPTACIÓN DE LEADS</div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
+                        <!-- COLUMNA WEB PARQUE VEGA -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 15px; border-radius: 8px; border: 2px solid #10b981;">
+                            <div class="node node-trigger" style="width: 100%; max-width: 280px;">
+                                <div class="node-title">Web Parque Vega</div>
+                                <div class="node-desc">Usuario completa formulario</div>
+                                <div class="content-box">
+                                    <div style="font-weight: 600; margin-bottom: 4px;">Datos Capturados:</div>
+                                    • Motivación compra<br>
+                                    • Perfil decisión (DISC)<br>
+                                    • Composición familiar<br>
+                                    • Situación financiera<br>
+                                    • Preferencias adosado
+                                </div>
+                            </div>
+                            <div style="font-size: 1.2rem;">↓</div>
+                            <div class="node node-email-auto" style="width: 100%; max-width: 280px;">
+                                <div class="timing-badge">Inmediato</div>
+                                <div class="node-title">Email Bienvenida Web</div>
+                                <div class="node-desc">Acceso + credenciales Parque Vega</div>
+                            </div>
+                        </div>
+                        
+                        <!-- COLUMNA IDEALISTA -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; background: linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%); padding: 15px; border-radius: 8px; border: 2px solid #ff5a5f;">
+                            <div class="node node-trigger" style="width: 100%; max-width: 280px;">
+                                <div class="node-title">Lead desde Idealista</div>
+                                <div class="node-desc">Exclusividad total - Portal</div>
+                                <div class="content-box">
+                                    <div style="font-weight: 600; margin-bottom: 4px;">Origen:</div>
+                                    • Portal Idealista<br>
+                                    • Sin cualificación previa<br>
+                                    • Interés en Parque Vega<br>
+                                    • Datos básicos contacto
+                                </div>
+                            </div>
+                            <div style="font-size: 1.2rem;">↓</div>
+                            <div class="node node-email-rescue" style="width: 100%; max-width: 280px;">
+                                <div class="timing-badge">Inmediato</div>
+                                <div class="node-title">Email Idealista</div>
+                                <div class="node-desc">Enlace a Home Landing</div>
+                            </div>
+                            <div style="font-size: 1.2rem;">↓</div>
+                            <div class="node node-whatsapp" style="width: 100%; max-width: 280px;">
+                                <div class="timing-badge">Inmediato</div>
+                                <div class="node-title">WhatsApp Idealista</div>
+                                <div class="node-desc">Seguimiento inmediato</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); border: 2px solid #6366f1; border-radius: 8px;">
+                        <div style="font-weight: 800; color: #4338ca; font-size: 0.9rem;">🔄 TODOS LOS LEADS → ENTRAN EN ENGAGE</div>
+                    </div>
+                </div>
+                
+                <!-- ENGAGE - MONITORING -->
+                <div class="flow-section">
+                    <div class="stage-title">ENGAGE - MONITORING Y RESCATE</div>
+                    
+                    <div class="arrow">MONITORING: 24h sin avance a SELECT → RESCATE</div>
+                    
+                    <!-- RESCATE GENERAL -->
+                    <div style="border-top: 2px solid #ef4444; padding-top: 15px; margin-top: 15px;">
+                        <div style="text-align: center; font-weight: 700; color: #991b1b; margin-bottom: 10px;">RESCATE SI SE ESTANCA</div>
+                        <div style="text-align: center; color: #991b1b; font-weight: 600; padding: 8px; font-size: 0.75rem; background: #fef2f2; border-radius: 6px; margin-bottom: 15px;">
+                            No avanza a SELECT (configurador)<br>
+                            No genera interacción con contenido Parque Vega
+                        </div>
+                        
+                        <!-- BRANCHES POR LMP -->
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
+                            <div style="text-align: center; background: #eff6ff; padding: 10px; border-radius: 6px; border: 2px solid #3b82f6;">
+                                <div style="font-weight: 700; color: #1e40af; margin-bottom: 8px;">
+                                    <span class="lmp-badge lmp-familia-crecimiento">FAMILIA EN CRECIMIENTO</span>
+                                </div>
+                                <div style="font-size: 0.7rem; color: #64748b;">
+                                    35-48 años • 50-85k€<br>
+                                    Pareja con hijos • 36% demanda
+                                </div>
+                            </div>
+                            <div style="text-align: center; background: #fdf2f8; padding: 10px; border-radius: 6px; border: 2px solid #ec4899;">
+                                <div style="font-weight: 700; color: #831843; margin-bottom: 8px;">
+                                    <span class="lmp-badge lmp-pareja-consolidada">PAREJA SOLA CONSOLIDADA</span>
+                                </div>
+                                <div style="font-size: 0.7rem; color: #64748b;">
+                                    48-62 años • 55-95k€<br>
+                                    Pareja sin hijos • 19% demanda
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- FLUJO EMAILS POR LMP -->
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 15px;">
+                            <!-- Familia en Crecimiento Column -->
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div class="node node-email-rescue" style="max-width: 100%; margin: 0;">
+                                    <div class="timing-badge rescue-badge">+72h</div>
+                                    <div class="node-title">Email Familia en Crecimiento</div>
+                                    <div class="node-desc">Tu hogar familiar en zona premium</div>
+                                    <div class="templates" style="background: #fecaca;">
+                                        <strong>Email Template:</strong><br>
+                                        Email Rescate - Familia en Crecimiento
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pareja Consolidada Column -->
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div class="node node-email-rescue" style="max-width: 100%; margin: 0;">
+                                    <div class="timing-badge rescue-badge">+72h</div>
+                                    <div class="node-title">Email Pareja Consolidada</div>
+                                    <div class="node-desc">Tu oasis de tranquilidad y confort</div>
+                                    <div class="templates" style="background: #fecaca;">
+                                        <strong>Email Template:</strong><br>
+                                        Email Rescate - Pareja Consolidada
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="arrow">↓</div>
+                        
+                        <!-- FLUJO WHATSAPP POR LMP -->
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 15px;">
+                            <!-- Familia en Crecimiento WhatsApp -->
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                    <div class="timing-badge rescue-badge">+6días</div>
+                                    <div class="node-title">WhatsApp Familia en Crecimiento</div>
+                                    <div class="node-desc">El hogar que tu familia merece</div>
+                                    <div class="templates" style="background: #dcfce7;">
+                                        <strong>WhatsApp Template:</strong><br>
+                                        💬 WhatsApp - Familia en Crecimiento
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pareja Consolidada WhatsApp -->
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                    <div class="timing-badge rescue-badge">+6días</div>
+                                    <div class="node-title">WhatsApp Pareja Consolidada</div>
+                                    <div class="node-desc">El estilo de vida que mereces</div>
+                                    <div class="templates" style="background: #dcfce7;">
+                                        <strong>WhatsApp Template:</strong><br>
+                                        💬 WhatsApp - Pareja Consolidada
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="arrow">↓</div>
+                        
+                        <!-- WHATSAPP FINAL POR LMP -->
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 15px;">
+                            <!-- Familia en Crecimiento Final -->
+                            <div style="text-align: center;">
+                                <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                    <div class="timing-badge rescue-badge">+9días</div>
+                                    <div class="node-title">WhatsApp Final - Familia Crecimiento</div>
+                                    <div class="node-desc">Última oportunidad hogar familiar</div>
+                                    <div class="templates" style="background: #dcfce7;">
+                                        <strong>WhatsApp Template:</strong><br>
+                                        💬 WhatsApp Final - Familia Crecimiento
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pareja Consolidada Final -->
+                            <div style="text-align: center;">
+                                <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                    <div class="timing-badge rescue-badge">+9días</div>
+                                    <div class="node-title">WhatsApp Final - Pareja Consolidada</div>
+                                    <div class="node-desc">Tu espacio de bienestar te espera</div>
+                                    <div class="templates" style="background: #dcfce7;">
+                                        <strong>WhatsApp Template:</strong><br>
+                                        💬 WhatsApp Final - Pareja Consolidada
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SELECT CONFIGURADOR -->
+                <div class="flow-section">
+                    <div class="stage-title">SELECT - Configurador Personalización Adosado</div>
+                    
+                    <div class="flow-row">
+                        <div class="node node-trigger">
+                            <div class="node-title">Accede al Configurador</div>
+                            <div class="node-desc">Primera entrada Parque Vega</div>
+                            <div class="content-box">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Condiciones:</div>
+                                • Configurador Parque Vega desbloqueado<br>
+                                • Selección de unidad específica<br>
+                                • Personalización acabados<br>
+                                • Opciones jardín privado<br>
+                                • Agenda cita con comercial
+                            </div>
+                        </div>
+                        <div style="margin: 0 10px;">→</div>
+                        <div class="node node-decision">
+                            <div class="node-title">¿Completa Configurador Parque Vega?</div>
+                            <div class="node-desc">Selección unidad + personalización + cita</div>
+                            <div class="content-box">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Includes:</div>
+                                • Unidad específica seleccionada<br>
+                                • Acabados y extras configurados<br>
+                                • Datos personales completados<br>
+                                • Cita agendada con comercial
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="branch-container">
+                        <div class="branch">
+                            <div class="branch-title branch-stagnant">ACCEDE PERO NO COMPLETA</div>
+                            
+                            <!-- Diferenciación por LMP en rescate de configurador -->
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px;">
+                                <!-- Familia en Crecimiento -->
+                                <div>
+                                    <div style="text-align: center; margin-bottom: 8px;">
+                                        <span class="lmp-badge lmp-familia-crecimiento">Familia en Crecimiento</span>
+                                    </div>
+                                    <div class="node node-email-rescue" style="max-width: 100%; margin: 0;">
+                                        <div class="timing-badge rescue-badge">+48h</div>
+                                        <div class="node-title">Email Rescate Config FC</div>
+                                        <div class="node-desc">Asegura tu hogar familiar</div>
+                                        <div class="templates" style="background: #fecaca;">
+                                            <strong>Email Template:</strong><br>
+                                            Email Rescate Config - Familia Crecimiento
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Pareja Consolidada -->
+                                <div>
+                                    <div style="text-align: center; margin-bottom: 8px;">
+                                        <span class="lmp-badge lmp-pareja-consolidada">Pareja Consolidada</span>
+                                    </div>
+                                    <div class="node node-email-rescue" style="max-width: 100%; margin: 0;">
+                                        <div class="timing-badge rescue-badge">+48h</div>
+                                        <div class="node-title">Email Rescate Config PC</div>
+                                        <div class="node-desc">Tu espacio de confort te espera</div>
+                                        <div class="templates" style="background: #fecaca;">
+                                            <strong>Email Template:</strong><br>
+                                            Email Rescate Config - Pareja Consolidada
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="arrow">↓</div>
+                            
+                            <!-- WhatsApp diferenciado por LMP -->
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px;">
+                                <!-- Familia en Crecimiento -->
+                                <div>
+                                    <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                        <div class="timing-badge rescue-badge">+4días</div>
+                                        <div class="node-title">WhatsApp Config FC</div>
+                                        <div class="node-desc">Completa tu selección</div>
+                                        <div class="templates" style="background: #dcfce7;">
+                                            <strong>WhatsApp Template:</strong><br>
+                                            💬 WhatsApp Config - Familia Crecimiento
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Pareja Consolidada -->
+                                <div>
+                                    <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                        <div class="timing-badge rescue-badge">+4días</div>
+                                        <div class="node-title">WhatsApp Config PC</div>
+                                        <div class="node-desc">Personaliza tu espacio ideal</div>
+                                        <div class="templates" style="background: #dcfce7;">
+                                            <strong>WhatsApp Template:</strong><br>
+                                            💬 WhatsApp Config - Pareja Consolidada
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="arrow">↓</div>
+                            
+                            <!-- WhatsApp Final por LMP -->
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                <!-- Familia en Crecimiento Final -->
+                                <div>
+                                    <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                        <div class="timing-badge rescue-badge">+6días</div>
+                                        <div class="node-title">WhatsApp Final Config FC</div>
+                                        <div class="node-desc">Asegura tu hogar familiar</div>
+                                        <div class="templates" style="background: #dcfce7;">
+                                            💬 WhatsApp Final Config - Familia Crecimiento
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Pareja Consolidada Final -->
+                                <div>
+                                    <div class="node node-whatsapp" style="max-width: 100%; margin: 0;">
+                                        <div class="timing-badge rescue-badge">+6días</div>
+                                        <div class="node-title">WhatsApp Final Config PC</div>
+                                        <div class="node-desc">El bienestar que buscas</div>
+                                        <div class="templates" style="background: #dcfce7;">
+                                            💬 WhatsApp Final Config - Pareja Consolidada
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="branch">
+                            <div class="branch-title branch-advance">SÍ COMPLETA + AGENDA CITA</div>
+                            <div style="text-align: center; color: #059669; font-weight: 600; padding: 10px; font-size: 0.75rem;">
+                                <strong>CONFIGURADOR PARQUE VEGA COMPLETADO</strong><br>
+                                Unidad seleccionada + Cita agendada<br>
+                                → Continúa a ENVÍO CONFIGURACIÓN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ENVÍO CONFIGURACIÓN -->
+                <div class="flow-section">
+                    <div class="stage-title">ENVÍO CONFIGURACIÓN Y DATOS PARQUE VEGA</div>
+                    
+                    <div class="flow-row">
+                        <div class="node node-trigger">
+                            <div class="node-title">Configurador Parque Vega Completado</div>
+                            <div class="node-desc">Unidad + Personalización + Cita</div>
+                            <div class="content-box">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Condiciones:</div>
+                                • Unidad específica seleccionada<br>
+                                • Acabados personalizados<br>
+                                • Cita agendada con comercial<br>
+                                • Lead caliente documentado
+                            </div>
+                        </div>
+                        <div style="margin: 0 10px;">→</div>
+                        <div class="node node-email-auto">
+                            <div class="timing-badge">Inmediato</div>
+                            <div class="node-title">Email Automático</div>
+                            <div class="node-desc">Confirmación recepción Parque Vega</div>
+                            <div class="highlight-box">
+                                "Hemos recibido tu configuración para Parque Vega. Tu cita está confirmada. Nuestro equipo especializado te contactará en las próximas 24-48h para ultimar los detalles de tu visita."
+                            </div>
+                        </div>
+                        <div style="margin: 0 10px;">→</div>
+                        <div class="node node-alert">
+                            <div class="timing-badge">Inmediato</div>
+                            <div class="node-title">ALERT EQUIPO VENTAS</div>
+                            <div class="node-desc">Lead caliente Parque Vega</div>
+                            <div class="content-box">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Contenido:</div>
+                                • Lead caliente con cita agendada<br>
+                                • Proyecto Parque Vega<br>
+                                • Unidad específica seleccionada<br>
+                                • Prioridad contacto 24-48h
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ALERTS URGENCIA -->
+                <div class="flow-section">
+                    <div class="stage-title">ALERTS URGENCIA - TRANSFER EQUIPO VENTAS PARQUE VEGA</div>
+                    
+                    <div style="text-align: center;">
+                        <div class="node node-alert" style="display: inline-block; max-width: 400px;">
+                            <div class="node-title">IA DETECTA URGENCIA</div>
+                            <div class="node-desc">Independiente del grado de avance</div>
+                            <div class="content-box">
+                                <div style="font-weight: 600; margin-bottom: 6px;">Triggers Inmediatos:</div>
+                                • "Quiero hablar con alguien"<br>
+                                • "¿Pueden llamarme ahora?"<br>
+                                • Solicita visita presencial Gijón<br>
+                                • Score alto tras chat/voice interaction<br>
+                                • Urgencia expresada para comprar<br>
+                                • Menciona competencia directa<br>
+                                • Pregunta por últimas unidades<br>
+                                • Consulta sobre financiación específica
+                            </div>
+                            <div style="background: #ef4444; color: white; padding: 8px; border-radius: 6px; margin-top: 8px; font-weight: 700; text-align: center; font-size: 0.75rem;">
+                                ALERT AUTOMÁTICO PARQUE VEGA<br>
+                                (Bypass completo del flujo automation)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        NOTA IMPORTANTE: Este alert tiene prioridad absoluta sobre cualquier etapa del flujo automation y deriva inmediatamente al equipo comercial Parque Vega para contacto manual urgente. Promoción exclusiva con solo 52 unidades. Deadline: 29 de octubre.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nodes = document.querySelectorAll('.node');
+            nodes.forEach((node, index) => {
+                node.style.opacity = '0';
+                node.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    node.style.transition = 'all 0.4s ease';
+                    node.style.opacity = '1';
+                    node.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+            
+            nodes.forEach(node => {
+                node.addEventListener('click', () => {
+                    node.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        node.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
